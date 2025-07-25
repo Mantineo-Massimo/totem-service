@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totem Informativo</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="totem-container">
+        <!-- Sezione Superiore: Mappa e Percorso -->
+        <div class="map-view">
+            <img id="floorplan-image" src="assets/floorplan.jpg" alt="Piantina del piano">
+            <svg id="path-overlay" viewBox="0 0 1000 1778" preserveAspectRatio="xMidYMid meet">
+                <!-- Il punto di partenza del totem -->
+                <circle id="you-are-here" cx="500" cy="1600" r="20" />
+                <!-- Il percorso verrà disegnato qui -->
+                <path id="route-path" d="" />
+            </svg>
+            <div id="destination-label" class="destination-label"></div>
+            <button id="close-path-btn" style="display: none;">Chiudi</button>
+        </div>
+
+        <!-- Sezione Inferiore: Liste e Card -->
+        <div class="directory-view">
+            <header class="directory-header">
+                <div id="current-time" class="time"></div>
+                <div id="current-date" class="date"></div>
+            </header>
+            <main class="lists-container">
+                <div class="list-column">
+                    <h2>Aule</h2>
+                    <div id="classrooms-list" class="card-list"></div>
+                </div>
+                <div class="list-column">
+                    <h2>Laboratori</h2>
+                    <div id="labs-list" class="card-list"></div>
+                </div>
+                <div class="list-column">
+                    <h2>Studi Docenti</h2>
+                    <div id="offices-list" class="card-list"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="static/js/script.js"></script>
+</body>
+</html>

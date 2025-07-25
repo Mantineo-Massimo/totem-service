@@ -1,0 +1,19 @@
+{
+  "locationName": "Edificio A - Ingresso Principale",
+  "floorplanImage": "assets/floorplan-a.jpg",
+  "youAreHere": "500,1600",
+  "pointsOfInterest": {
+    "classrooms": [
+      {"name": "Aula Magna", "path": "M 500 1600 L 500 1200 L 800 1200"},
+      {"name": "Aula 1.1", "path": "M 500 1600 L 300 1400"},
+      {"name": "Aula 1.2", "path": "M 500 1600 L 300 1200"}
+    ],
+    "labs": [
+      {"name": "Laboratorio di Fisica", "path": "M 500 1600 L 500 800 L 200 800"}
+    ],
+    "offices": [
+      {"name": "Segreteria Studenti", "path": "M 500 1600 L 500 400"},
+      {"name": "Prof. M. Rossi", "path": "M 500 1600 L 800 400"}
+    ]
+  }
+}
