@@ -1,6 +1,9 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Elementi del DOM ---
-    const dom = {
+/**
+ * Script for the Totem Service - Legacy Browser Compatible Version.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Riferimenti al DOM ---
+    var dom = {
         time: document.getElementById('current-time'),
         date: document.getElementById('current-date'),
         locationLabel: document.getElementById('location-label'),
@@ -19,47 +22,75 @@ document.addEventListener('DOMContentLoaded', () => {
         mapView: document.querySelector('.map-view')
     };
 
-    // --- Funzioni di Utilità ---
+    // --- Stato e Configurazione Centralizzati ---
+    var state = {
+        data: null,
+        params: new URLSearchParams(window.location.search)
+    };
+
+    var config = {
+        dataRefreshInterval: 5 * 60 // in secondi
+    };
+
+    var translations = {
+        missingLocation: "<h1>Errore: Parametro 'location' mancante.</h1>",
+        loadingError: function(locationId) { return "<h1>Impossibile caricare la configurazione per '" + locationId + "'</h1>"; }
+    };
+
     function updateClock() {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const dateString = now.toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        var now = new Date();
+        var timeString = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         dom.time.textContent = timeString;
-        dom.date.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
     }
 
-    // --- Logica Principale ---
+    function updateStaticUI() {
+        var now = new Date();
+        var dateString = now.toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        dom.date.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+    }
+    
     function createCard(item) {
-        const card = document.createElement('div');
+        var card = document.createElement('div');
         card.className = 'card';
         card.textContent = item.name;
-        card.addEventListener('click', () => showPath(item.name, item.path));
+        card.addEventListener('click', function() { showPath(item.name, item.path); });
         return card;
     }
 
+    function renderDirectory(pointsOfInterest) {
+        var classroomsFragment = document.createDocumentFragment();
+        pointsOfInterest.classrooms.forEach(function(item) { classroomsFragment.appendChild(createCard(item)); });
+        dom.classroomsList.innerHTML = '';
+        dom.classroomsList.appendChild(classroomsFragment);
+
+        var labsFragment = document.createDocumentFragment();
+        pointsOfInterest.labs.forEach(function(item) { labsFragment.appendChild(createCard(item)); });
+        dom.labsList.innerHTML = '';
+        dom.labsList.appendChild(labsFragment);
+
+        var officesFragment = document.createDocumentFragment();
+        pointsOfInterest.offices.forEach(function(item) { officesFragment.appendChild(createCard(item)); });
+        dom.officesList.innerHTML = '';
+        dom.officesList.appendChild(officesFragment);
+    }
+    
     function showPath(name, pathData) {
         dom.routePath.setAttribute('d', pathData);
         dom.routePath.style.display = 'block';
 
-        // MODIFICA CHIAVE: Usa il metodo del browser per trovare il punto finale esatto del percorso.
-        // Questo metodo è molto più affidabile del precedente.
-        const totalLength = dom.routePath.getTotalLength();
-        const endPoint = dom.routePath.getPointAtLength(totalLength);
+        var totalLength = dom.routePath.getTotalLength();
+        var endPoint = dom.routePath.getPointAtLength(totalLength);
 
-        // Posiziona e mostra il cerchio di destinazione usando le coordinate corrette
         dom.destinationPoint.setAttribute('cx', endPoint.x);
         dom.destinationPoint.setAttribute('cy', endPoint.y);
         dom.destinationPoint.style.visibility = 'visible';
 
-        dom.destinationLabel.textContent = `Percorso per: ${name}`;
+        dom.destinationLabel.textContent = 'Percorso per: ' + name;
         dom.destinationLabel.style.display = 'block';
         dom.closePathBtn.style.display = 'block';
 
-        // Riavvia l'animazione del disegno del percorso
         dom.routePath.style.animation = 'none';
-        setTimeout(() => {
-            dom.routePath.style.animation = '';
-        }, 10);
+        setTimeout(function() { dom.routePath.style.animation = ''; }, 10);
 
         dom.mapView.scrollIntoView({ behavior: 'smooth' });
     }
@@ -72,52 +103,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleTabClick(event) {
-        const targetButton = event.target.closest('.tab-button');
+        var targetButton = event.target.closest('.tab-button');
         if (!targetButton) return;
 
-        const targetListId = targetButton.dataset.target;
+        var targetListId = targetButton.dataset.target;
         
-        dom.tabButtons.forEach(btn => btn.classList.remove('active'));
-        dom.cardLists.forEach(list => list.classList.remove('active'));
+        dom.tabButtons.forEach(function(btn) { btn.classList.remove('active'); });
+        dom.cardLists.forEach(function(list) { list.classList.remove('active'); });
 
         targetButton.classList.add('active');
-        document.getElementById(`${targetListId}-list`).classList.add('active');
+        document.getElementById(targetListId + '-list').classList.add('active');
     }
 
-    async function loadDirectoryData() {
-        const params = new URLSearchParams(window.location.search);
-        const locationId = params.get('location');
-
+    function loadDirectoryData() {
+        var locationId = state.params.get('location');
         if (!locationId) {
-            document.body.innerHTML = "<h1>Errore: Parametro 'location' mancante.</h1>";
+            document.body.innerHTML = translations.missingLocation;
             return;
         }
 
-        try {
-            const response = await fetch(`/totem/api/location/${locationId}`);
-            if (!response.ok) throw new Error(`Errore di rete: ${response.statusText}`);
-            const data = await response.json();
-            
-            dom.floorplanImage.src = `/totem/${data.floorplanImage}`;
-            const [cx, cy] = data.youAreHere.split(',');
-            dom.youAreHere.setAttribute('cx', cx);
-            dom.youAreHere.setAttribute('cy', cy);
-            dom.locationLabel.textContent = data.locationName;
+        fetch('/totem/api/location/' + locationId)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Errore di rete: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                state.data = data;
+                
+                dom.floorplanImage.src = '/totem/' + data.floorplanImage;
+                var coords = data.youAreHere.split(',');
+                var cx = coords[0];
+                var cy = coords[1];
+                dom.youAreHere.setAttribute('cx', cx);
+                dom.youAreHere.setAttribute('cy', cy);
+                dom.locationLabel.textContent = data.locationName;
 
-            const poi = data.pointsOfInterest;
-            poi.classrooms.forEach(item => dom.classroomsList.appendChild(createCard(item)));
-            poi.labs.forEach(item => dom.labsList.appendChild(createCard(item)));
-            poi.offices.forEach(item => dom.officesList.appendChild(createCard(item)));
-
-        } catch (e) {
-            console.error("Impossibile caricare i dati:", e);
-        }
+                renderDirectory(data.pointsOfInterest);
+            })
+            .catch(function(e) {
+                console.error("Impossibile caricare i dati per il totem:", e);
+                document.body.innerHTML = translations.loadingError(locationId);
+            });
     }
 
-    // --- Inizializzazione ---
-    updateClock();
-    setInterval(updateClock, 1000);
-    loadDirectoryData();
-    dom.closePathBtn.addEventListener('click', hidePath);
-    dom.tabsContainer.addEventListener('click', handleTabClick);
+    function init() {
+        updateStaticUI();
+        loadDirectoryData();
+        
+        dom.closePathBtn.addEventListener('click', hidePath);
+        dom.tabsContainer.addEventListener('click', handleTabClick);
+
+        var secondsCounter = 0;
+        setInterval(function() {
+            secondsCounter++;
+            updateClock();
+
+            if (secondsCounter % config.dataRefreshInterval === 0) {
+                loadDirectoryData();
+            }
+        }, 1000);
+    }
+
+    init();
 });

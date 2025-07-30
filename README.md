@@ -13,6 +13,18 @@ Un microservizio per visualizzare in tempo reale gli orari delle lezioni univers
 
 ---
 
+## Indice
+
+1.  [Descrizione](#-descrizione)
+2.  [Funzionalità](#-funzionalità)
+3.  [Setup & Configurazione](#-setup&configurazione)
+4.  [Avvio](#-avvio)
+5.  [Utilizzo e URL di Esempio](#-utilizzo-e-url-di-esempio)
+6.  [Tecnologie Utilizzate](#-tecnologie-utilizzate)
+7.  [Autori](#️-autori)
+
+---
+
 ## Descrizione
 
 Lo **Schedule Service** si collega alle API ufficiali dell'ateneo (es. CINECA) per recuperare e mostrare gli orari delle lezioni. Fornisce due visualizzazioni ottimizzate per display di digital signage:
@@ -96,3 +108,9 @@ Mostra l'orario aggregato di un intero piano.
 * **Backend**: Python, Flask, Gunicorn, Pydantic
 * **Frontend**: HTML5, CSS3, JavaScript
 * **Deployment**: Docker
+
+---
+
+## Autori
+
+Massimo Mantineo – Università degli Studi di Messina
