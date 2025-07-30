@@ -1,96 +1,116 @@
-/* Impostazioni generali */
+/* Stile generale e reset */
 body {
-  margin: 0;
-  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: #EFEFEF;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    /* Abilita lo scrolling per l'intera pagina */
+    overflow-y: auto;
 }
 
-.page-wrapper {
-  display: flex;
-  height: 100%;
-}
-
-/* Barra laterale */
-.sidebar {
-  flex: 0 0 100px;
-  background-color: #33373a;
-}
-
-/* Pannello principale con header, contenuti e footer */
-.main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 40px;
-}
-
-/* Header */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0054a6;
-  color: white;
-  padding: 15px 30px;
-  flex-shrink: 0;
-}
-.header-left {
-  display: flex;
-  align-items: center;
-}
-.logo {
-  height: 60px;
-  margin-right: 20px;
-}
-.page-header h1 {
-  font-size: 2.2em;
-  font-weight: 600;
-  margin: 0;
-}
-.clock {
-  font-size: 3em;
-  font-weight: bold;
-}
-
-/* Area contenuti (riquadro bianco) */
-.content-area {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  margin: 30px 0;
-  border-radius: 40px;
-  border: 10px solid #0054a6;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  padding: 20px;
-  overflow: hidden;
+/* --- Sezione Mappa (occupa il 100% dell'altezza dello schermo iniziale) --- */
+.map-view {
+    height: 600px;
+    width: 1080px;
+    position: relative;
+    background: url('/totem/assets/monitor_background.png') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 #floorplan-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Adatta l'immagine senza distorcerla o tagliarla */
+    max-width: 75%;
+    max-height: 75%;
+    object-fit: contain;
+    box-sizing: border-box;
 }
 
-/* Footer */
-.page-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0054a6;
-  color: white;
-  padding: 15px 30px;
-  flex-shrink: 0;
+/* --- Stili per gli Overlay (Ora, Data, Luogo) --- */
+.top-right, .bottom-left, .bottom-right {
+    position: absolute;
+    font-weight: bold;
+    color: white;
 }
-.footer-text {
-  font-size: 2.2em;
-  font-weight: bold;
+.top-right { top: 20px; right: 30px; font-size: 3em; }
+.bottom-left { bottom: 20px; left: 30px; font-size: 2.2em; }
+.bottom-right { bottom: 20px; right: 30px; font-size: 2.2em; text-align: right; }
+
+/* --- Sezione Directory (sotto la mappa, visibile dopo lo scroll) --- */
+.directory-view {
+    background-color: #3c7cbb;
+    color: white;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Gestione lingua */
-body.lang-en .lang-it { display: none; }
-body.lang-it .lang-en { display: none; }
+.directory-tabs {
+    display: flex;
+    border-bottom: 2px solid #004C99;
+    flex-shrink: 0;
+}
+.tab-button {
+    flex: 1;
+    padding: 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 4px solid transparent;
+}
+.tab-button.active {
+    color: white;
+    border-bottom-color: #a8dadc;
+}
+
+.lists-container {
+    padding-top: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+.card-list { display: none; }
+.card-list.active { display: block; }
+.card {
+    background-color: #004C99;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 1.3em;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid #0059b3;
+}
+.card:hover {
+    background-color: #a8dadc;
+    color: #1d3557;
+}
+
+/* --- Stili per il percorso SVG e i pulsanti --- */
+#path-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+#you-are-here { fill: #e63946; stroke: white; stroke-width: 3; animation: pulse 2s infinite; }
+#destination-point { fill: #3c7cbb; stroke: white; stroke-width: 3; animation: pulse 2s infinite; }
+#route-path {
+    fill: none;
+    stroke: #e63946;
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: draw-path 2s forwards;
+    display: none;
+}
+
+.destination-label, #close-path-btn { position: absolute; z-index: 10; font-weight: bold; border-radius: 8px; }
+.destination-label { bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(0, 0, 0, 0.8); color: white; padding: 10px 20px; font-size: 1.5em; display: none; }
+#close-path-btn { top: 20px; right: 20px; padding: 12px 20px; font-size: 1.1em; background-color: #e63946; color: white; border: none; cursor: pointer; }
+@keyframes pulse { 0% { r: 15; opacity: 1; } 50% { r: 20; opacity: 0.7; } 100% { r: 15; opacity: 1; } }
+@keyframes draw-path { to { stroke-dashoffset: 0; } }

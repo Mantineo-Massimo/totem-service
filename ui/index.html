@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Floor Plan Display – {{ building_name }} Floor {{ floor_number }}</title>
-  <link rel="stylesheet" href="/floorplan/static/css/style.css">
-  <link rel="icon" href="/floorplan/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totem Informativo</title>
+    <link rel="stylesheet" href="/totem/static/css/style.css">
+    <link rel="icon" href="/totem/favicon.ico">
 </head>
-<body class="lang-en" data-building="{{ building_name }}" data-floor="{{ floor_number }}">
+<body>
+    <section class="map-view">
+        <img id="floorplan-image" src="" alt="Piantina del piano">
+        <svg id="path-overlay" viewBox="0 0 1000 563" preserveAspectRatio="xMidYMid meet">
+            <circle id="you-are-here" cx="500" cy="500" r="15" />
+            <path id="route-path" d="" />
+            <circle id="destination-point" cx="500" cy="500" r="15" style="visibility: hidden;" />
+        </svg>
+        <div id="destination-label" class="destination-label"></div>
+        <button id="close-path-btn" style="display: none;">Chiudi</button>
 
-  <div class="page-wrapper">
-    <aside class="sidebar"></aside>
-    <div class="main-content">
-      <header class="page-header">
-        <div class="header-left">
-          <img src="/wayfinding/assets/logo.png" alt="Logo UniME" class="logo">
-          <h1><span class="lang-it">Università degli Studi di Messina</span><span class="lang-en">University of Messina</span></h1>
-        </div>
-        <div id="clock" class="clock"></div>
-      </header>
-      
-      <main class="content-area">
-        <img id="floorplan-image" src="{{ floorplan_image_url }}" alt="Planimetria">
-      </main>
-      
-      <footer class="page-footer">
-        <div id="current-date" class="footer-text"></div>
-        <div id="floor-label" class="footer-text"></div>
-      </footer>
-    </div>
-  </div>
+        <div id="current-time" class="top-right"></div>
+        <div id="current-date" class="bottom-left"></div>
+        <div id="location-label" class="bottom-right"></div>
+    </section>
 
-  <script src="/floorplan/static/js/script.js"></script>
+    <section class="directory-view">
+        <nav class="directory-tabs">
+            <button class="tab-button active" data-target="classrooms">Aule</button>
+            <button class="tab-button" data-target="labs">Laboratori</button>
+            <button class="tab-button" data-target="offices">Studi Docenti</button>
+        </nav>
+        <main class="lists-container">
+            <div id="classrooms-list" class="card-list active"></div>
+            <div id="labs-list" class="card-list"></div>
+            <div id="offices-list" class="card-list"></div>
+        </main>
+    </section>
+
+    <script src="/totem/static/js/script.js"></script>
 </body>
 </html>
