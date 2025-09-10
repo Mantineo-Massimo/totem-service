@@ -1,0 +1,16 @@
+{
+  "floorId": "piano_terra",
+  "floorName": "Piano Terra",
+  "floorplanImage": "/totem/assets/mappa_piano_terra.png",
+  "pointsOfInterest": [
+    { "name": "A-S-1", "coordinates": [180, 250] },
+    { "name": "A-S-2", "coordinates": [280, 250] },
+    { "name": "A-S-3", "coordinates": [380, 250] },
+    { "name": "A-S-6", "coordinates": [680, 250] },
+    { "name": "A-S-7", "coordinates": [780, 250] },
+    { "name": "A-S-8", "coordinates": [880, 250] }
+  ],
+  "connectionPoints": [
+    { "id": "ascensore_principale", "type": "elevator", "coordinates": [500, 300] }
+  ]
+}

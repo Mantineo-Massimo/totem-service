@@ -1,0 +1,67 @@
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #fff; display: flex; flex-direction: column; height: 1920px; width: 1080px; overflow: hidden; }
+.page-header { background-color: #1d3557; color: white; padding: 20px 40px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); flex-shrink: 0; }
+.page-header h1 { margin: 0 auto; font-size: 2.5em; }
+.back-button { color: white; text-decoration: none; font-size: 1.5em; font-weight: 600; }
+.main-container { display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
+.sidebar { width: 100%; background-color: #f0f2f5; padding: 20px; display: flex; flex-direction: column; box-sizing: border-box; border-bottom: 2px solid #ddd; }
+.hidden { display: none !important; }
+
+/* Selettore modalità */
+.mode-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+.mode-btn { flex: 1; padding: 20px; font-size: 1.5em; font-weight: 600; cursor: pointer; border: 2px solid #004C99; background-color: #fff; color: #004C99; border-radius: 8px; }
+.mode-btn.active { background-color: #004C99; color: white; }
+
+/* Modalità Sfoglia per Piano */
+#browse-container { max-height: 400px; overflow-y: auto; }
+.floor-group details { margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; background: #fff; }
+.floor-group summary { font-size: 1.6em; font-weight: bold; padding: 15px; cursor: pointer; }
+.room-buttons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 15px; }
+.room-button { padding: 15px; font-size: 1.2em; cursor: pointer; background-color: #eaf2f8; border: 1px solid #ccc; border-radius: 5px; }
+.room-button:hover { background-color: #d0dce7; }
+
+/* Modalità Cerca per Nome */
+#search-display { width: 100%; min-height: 60px; background-color: #fff; border: 2px solid #ccc; border-radius: 8px; font-size: 2em; padding: 10px; box-sizing: border-box; margin-bottom: 10px; }
+#search-results { list-style: none; padding: 0; max-height: 140px; overflow-y: auto; font-size: 1.3em; background: #fff; border: 1px solid #ddd; }
+#search-results li { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+#virtual-keyboard { margin-top: 10px; }
+.keyboard-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 5px; }
+.keyboard-key { height: 60px; flex-grow: 1; font-size: 1.5em; font-weight: bold; border-radius: 5px; border: 1px solid #ccc; background-color: #fff; cursor: pointer; }
+.keyboard-key:active { background-color: #a8dadc; }
+.keyboard-key.special { flex-grow: 2; background-color: #e63946; color: white; }
+
+/* Istruzioni e Mappa */
+#instructions { margin-top: 20px; padding: 15px; background-color: #eaf2f8; border-radius: 5px; font-size: 1.3em; line-height: 1.5; }
+.map-container { flex-grow: 1; display: flex; flex-direction: column; padding: 20px; overflow: hidden; }
+#floor-name { font-size: 2em; margin: 0 0 15px 0; text-align: center; }
+.map-viewport { position: relative; width: 100%; height: 100%; background-color: #ddd; border-radius: 8px; }
+.floorplan-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity 0.8s ease-in-out; }
+#path-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#you-are-here { fill: #e63946; stroke: white; stroke-width: 4; r: 15; }
+#destination-point { fill: #3c7cbb; stroke: white; stroke-width: 4; r: 15; }
+#connection-icon { transform: translate(-30px, -30px); }
+
+/* Etichette di testo sulla mappa */
+.location-label {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    fill: #1d3557;
+    stroke: white;
+    stroke-width: 4px;
+    paint-order: stroke;
+    text-anchor: middle;
+}
+
+/* Animazione della linea */
+.draw-animation {
+    fill: none;
+    stroke: #e63946;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    -webkit-animation: draw 4s linear forwards;
+    animation: draw 4s linear forwards;
+}
+@-webkit-keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }

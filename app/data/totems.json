@@ -1,0 +1,10 @@
+{
+  "totem_ingresso_principale": {
+    "floorId": "piano_terra",
+    "coordinates": [250, 350]
+  },
+  "totem_primo_piano": {
+    "floorId": "primo_piano",
+    "coordinates": [550, 380]
+  }
+}

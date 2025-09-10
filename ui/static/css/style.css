@@ -1,116 +1,105 @@
-/* Stile generale e reset */
-body {
+/* DigitalSignageSuite/totem-service/ui/static/css/style.css */
+
+:root {
+    --unime-blue-dark: #3c7cbb;
+    --unime-blue-medium: #00428A;
+    --unime-yellow: #FFC107;
+    --unime-white: #FFFFFF;
+}
+
+/* ✔️ OTTIMIZZAZIONE: Lo sfondo viene applicato qui */
+html {
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-color: var(--unime-blue-dark); /* Colore di fallback */
+}
+
+html, body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #ffffff;
-    /* Abilita lo scrolling per l'intera pagina */
-    overflow-y: auto;
-}
-
-/* --- Sezione Mappa (occupa il 100% dell'altezza dello schermo iniziale) --- */
-.map-view {
-    height: 600px;
+    padding: 0;
     width: 1080px;
-    position: relative;
-    background: url('/totem/assets/monitor_background.png') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 1920px;
     overflow: hidden;
-    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif;
 }
 
-#floorplan-image {
-    max-width: 75%;
-    max-height: 75%;
-    object-fit: contain;
-    box-sizing: border-box;
-}
-
-/* --- Stili per gli Overlay (Ora, Data, Luogo) --- */
-.top-right, .bottom-left, .bottom-right {
+/* ✔️ OTTIMIZZAZIONE: Il body è trasparente per mostrare lo sfondo dell'html */
+body {
     position: absolute;
-    font-weight: bold;
-    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+    background: transparent;
 }
-.top-right { top: 20px; right: 30px; font-size: 3em; }
-.bottom-left { bottom: 20px; left: 30px; font-size: 2.2em; }
-.bottom-right { bottom: 20px; right: 30px; font-size: 2.2em; text-align: right; }
 
-/* --- Sezione Directory (sotto la mappa, visibile dopo lo scroll) --- */
-.directory-view {
-    background-color: #3c7cbb;
-    color: white;
-    padding: 20px 30px;
+.header-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px 20px 20px;
     box-sizing: border-box;
-    min-height: 100vh;
+    color: var(--unime-white);
+    font-size: 36px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.menu-container {
+    position: absolute;
+    top: 680px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
 }
 
-.directory-tabs {
+.main-menu {
+    width: 90%;
     display: flex;
-    border-bottom: 2px solid #004C99;
-    flex-shrink: 0;
-}
-.tab-button {
-    flex: 1;
-    padding: 15px;
-    font-size: 1.4em;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-bottom: 4px solid transparent;
-}
-.tab-button.active {
-    color: white;
-    border-bottom-color: #a8dadc;
+    flex-direction: column;
+    align-items: center;
 }
 
-.lists-container {
-    padding-top: 20px;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-.card-list { display: none; }
-.card-list.active { display: block; }
-.card {
-    background-color: #004C99;
-    padding: 20px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    font-size: 1.3em;
+/* Stili dei pulsanti come da te specificato */
+.menu-button {
+    background-color: #ffffff;
+    border: 10px solid #979b9e;
+    color: #3c7cba;
+    padding: 35px 20px;
+    margin: 20px 0;
+    font-size: 55px;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
     text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    border: 1px solid #0059b3;
-}
-.card:hover {
-    background-color: #a8dadc;
-    color: #1d3557;
+    width: 100%;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
 }
 
-/* --- Stili per il percorso SVG e i pulsanti --- */
-#path-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-#you-are-here { fill: #e63946; stroke: white; stroke-width: 3; animation: pulse 2s infinite; }
-#destination-point { fill: #3c7cbb; stroke: white; stroke-width: 3; animation: pulse 2s infinite; }
-#route-path {
-    fill: none;
-    stroke: #e63946;
-    stroke-width: 7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 2000;
-    stroke-dashoffset: 2000;
-    animation: draw-path 2s forwards;
-    display: none;
+.menu-button:hover {
+    background-color: var(--unime-yellow);
+    color: var(--unime-blue-dark);
+    transform: scale(1.03);
+    border-color: var(--unime-blue-dark); /* Cambia anche il colore del bordo in hover */
 }
 
-.destination-label, #close-path-btn { position: absolute; z-index: 10; font-weight: bold; border-radius: 8px; }
-.destination-label { bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(0, 0, 0, 0.8); color: white; padding: 10px 20px; font-size: 1.5em; display: none; }
-#close-path-btn { top: 20px; right: 20px; padding: 12px 20px; font-size: 1.1em; background-color: #e63946; color: white; border: none; cursor: pointer; }
-@keyframes pulse { 0% { r: 15; opacity: 1; } 50% { r: 20; opacity: 0.7; } 100% { r: 15; opacity: 1; } }
-@keyframes draw-path { to { stroke-dashoffset: 0; } }
+#totem-id-display {
+    font-size: 28px;
+    color: var(--unime-blue-dark);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    margin-bottom: 50px;
+}
