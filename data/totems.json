@@ -1,0 +1,16 @@
+{
+    "TOTEM-INGRESSO-P1": {
+        "id": "TOTEM-INGRESSO-P1",
+        "name": "Totem Ingresso Principale",
+        "floor": 1,
+        "x": 120,
+        "y": 500
+    },
+    "TOTEM-STUDENTI-P0": {
+        "id": "TOTEM-STUDENTI-P0",
+        "name": "Totem Area Studenti",
+        "floor": 0,
+        "x": 540,
+        "y": 750
+    }
+}

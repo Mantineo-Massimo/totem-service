@@ -1,0 +1,171 @@
+body {
+    background: transparent; 
+}
+.wayfinding-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1200px 1fr; 
+}
+.map-area {
+    background-color: #f0f0f0; 
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.map-area h2 {
+    font-size: 42px;
+    color: var(--unime-blue-dark);
+    margin: 0 0 15px 0;
+}
+#map-wrapper {
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+    border: 2px solid var(--unime-gray);
+    overflow: hidden;
+}
+#map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#map-overlay, #path-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+#map-overlay { z-index: 3; } /* Overlay con i marker (sopra) */
+#path-svg { z-index: 2; }    /* SVG con la linea (sotto) */
+
+.path-line {
+    fill: none; stroke: #ff0000; stroke-width: 10;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 2500; stroke-dashoffset: 2500;
+    animation: draw-path 2s linear forwards;
+}
+@keyframes draw-path { to { stroke-dashoffset: 0; } }
+.rooms-area {
+    background: var(--unime-white);
+    padding: 15px 40px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    z-index: 20;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+.floor-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.tab-button {
+    padding: 15px 30px;
+    font-size: 28px;
+    background: #eee;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+.tab-button.active {
+    background: var(--unime-blue-light);
+    color: var(--unime-white);
+    border-color: var(--unime-blue-dark);
+}
+.rooms-list {
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 5px;
+}
+.room-button {
+    padding: 20px;
+    font-size: 32px;
+    background: var(--unime-white);
+    color: var(--unime-blue-dark);
+    border: 3px solid var(--unime-gray);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+.room-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.room-button.active {
+    background: var(--unime-blue-dark);
+    color: var(--unime-white);
+    border-color: var(--unime-blue-light);
+}
+#path-instructions {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 20px;
+    background: rgba(10, 43, 94, 0.9);
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    border-radius: 15px;
+    z-index: 100;
+    display: none;
+}
+.map-marker-wrapper {
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+.map-marker-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid var(--unime-white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    transform: translate(-50%, -50%); 
+}
+.map-marker-dot.totem { background-color: #dc3545; }
+.map-marker-dot.room { background-color: #007bff; }
+.map-marker-dot.poi { background-color: #ffc107; }
+.map-marker-dot.stairs {
+    width: 50px;
+    height: 50px;
+    background-color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.map-marker-dot.stairs img {
+    width: 100%;
+    height: 100%;
+}
+/* L'etichetta con il testo, posizionata SOPRA il pallino */
+.map-marker-label {
+    position: absolute;
+    bottom: 75px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    transform: translateX(-50%);
+    left: 10%;
+}

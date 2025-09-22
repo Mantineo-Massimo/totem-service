@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <title>Totem Unime - Trova Aula</title>
+    <link rel="stylesheet" href="/totem/static/css/common.css">
+    <link rel="stylesheet" href="/totem/static/css/wayfinding.css">
+    <link rel="icon" href="/totem/assets/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner-container">
+            <img src="/totem/assets/logo_unime.png" alt="Logo Unime" class="spinner-logo">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <div class="wayfinding-container">
+        <div class="map-area">
+            <h2 id="floor-name">Seleziona un'aula</h2>
+            <div id="map-wrapper">
+                <img id="map-image" src="" alt="Piantina del piano">
+                <div id="map-overlay"></div>
+                <svg id="path-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <div id="path-instructions"></div>
+        </div>
+        <div class="rooms-area">
+            <div class="floor-tabs" id="floor-tabs"></div>
+            <div class="rooms-list" id="rooms-list"></div>
+        </div>
+    </div>
+    <a href="home.html" class="back-button" id="home-link">← Indietro</a>
+    <script src="/totem/static/js/wayfinding.js"></script>
+</body>
+</html>

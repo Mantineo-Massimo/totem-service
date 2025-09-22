@@ -1,0 +1,19 @@
+{
+    "floor_id": -1, "name": "-1 | Piano meno Uno", "map_image": "/totem/assets/piantina_piano_-1.png",
+    "rooms": [
+        {"id": "A-T-1", "name": "Aula A-T-1", "x": 200, "y": 400},
+        {"id": "A-T-2", "name": "Aula A-T-2", "x": 275, "y": 400},
+        {"id": "A-T-3", "name": "Aula A-T-3", "x": 350, "y": 400},
+        {"id": "A-T-4", "name": "Aula A-T-4", "x": 425, "y": 400},
+        {"id": "A-T-5", "name": "Aula A-T-5", "x": 500, "y": 400},
+        {"id": "A-T-6", "name": "Aula A-T-6", "x": 575, "y": 400},
+        {"id": "A-T-7", "name": "Aula A-T-7", "x": 650, "y": 400},
+        {"id": "A-T-8", "name": "Aula A-T-8", "x": 725, "y": 400},
+        {"id": "A-T-9", "name": "Aula A-T-9", "x": 800, "y": 400},
+        {"id": "A-T-10", "name": "Aula A-T-10", "x": 875, "y": 400},
+        {"id": "A-T-11", "name": "Aula A-T-11", "x": 950, "y": 400}
+    ],
+    "pois": [
+        { "id": "stairs_-1_down", "name": "Scale", "floor": -1, "x": 800, "y": 300, "links_to": { "floor": 0, "poi_id": "stairs_0_down" } }
+    ]
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <title>Totem Unime - News & Eventi</title>
+    
+    <script>
+        (function() {
+            try {
+                const building = new URLSearchParams(window.location.search).get('building') || 'totem_A';
+                const bgMap = {'totem_A':'totem_A.jpg','totem_B':'totem_B.jpg','totem_SBA':'totem_SBA.jpg'};
+                if (bgMap[building]) {
+                    document.documentElement.style.backgroundImage = `url('/totem/assets/${bgMap[building]}')`;
+                }
+            } catch (e) { console.error("Errore sfondo:", e); }
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="/totem/static/css/common.css">
+    <link rel="stylesheet" href="/totem/static/css/infopoint.css">
+    
+    <link rel="icon" href="/totem/assets/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner-container">
+            <img src="/totem/assets/logo_unime.png" alt="Logo Unime" class="spinner-logo">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    
+    <div class="header-container">
+        <span id="current-date"></span>
+        <span id="current-time"></span>
+    </div>
+
+    <div class="content-container">
+        <section class="events-section">
+            <h2>Eventi in Evidenza</h2>
+            <div class="swiper-container swiper-events">
+                <div class="swiper-wrapper" id="events-wrapper"></div>
+            </div>
+        </section>
+
+        <h2 id="news-title">Ultime Notizie</h2>
+        <section class="news-section">
+            <div class="swiper-container swiper-news">
+                <div class="swiper-wrapper" id="news-wrapper"></div>
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal-container">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/totem/static/js/infopoint.js"></script>
+</body>
+</html>

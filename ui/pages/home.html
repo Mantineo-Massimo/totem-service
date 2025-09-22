@@ -8,39 +8,54 @@
     <script>
         (function() {
             try {
-                const building = new URLSearchParams(window.location.search).get('building');
+                const building = new URLSearchParams(window.location.search).get('building') || 'totem_A';
                 const bgMap = {'totem_A':'totem_A.jpg','totem_B':'totem_B.jpg','totem_SBA':'totem_SBA.jpg'};
-                
+
+                // Funzione per nascondere il loader
+                const hideLoader = () => {
+                    const loader = document.getElementById('loader');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                    }
+                };
+
                 if (building && bgMap[building]) {
                     const imageUrl = `/totem/assets/${bgMap[building]}`;
                     const preloader = new Image();
                     
+                    // QUANDO l'immagine di sfondo è pronta...
                     preloader.onload = function() {
                         document.documentElement.style.backgroundImage = `url('${imageUrl}')`;
-                        document.getElementById('loader').classList.add('hidden');
+                        hideLoader(); // ...nascondi il loader
                     };
                     
+                    // In caso di errore, nascondi comunque il loader per non bloccare la pagina
+                    preloader.onerror = function() {
+                        console.error("Impossibile caricare l'immagine di sfondo.");
+                        hideLoader();
+                    };
+
+                    // Avvia il download dell'immagine
                     preloader.src = imageUrl;
+
                 } else {
-                    document.addEventListener('DOMContentLoaded', () => {
-                       document.getElementById('loader').classList.add('hidden');
-                    });
+                    // Se non c'è un'immagine, nascondi il loader quando il DOM è pronto
+                    document.addEventListener('DOMContentLoaded', hideLoader);
                 }
             } catch (e) { 
-                console.error("Errore caricamento sfondo:", e); 
-                document.addEventListener('DOMContentLoaded', () => {
-                    document.getElementById('loader').classList.add('hidden');
-                });
+                console.error("Errore nello script di precaricamento:", e); 
+                document.addEventListener('DOMContentLoaded', hideLoader);
             }
         })();
     </script>
     
+    <link rel="stylesheet" href="/totem/static/css/common.css">
     <link rel="stylesheet" href="/totem/static/css/home.css">
+    
     <link rel="icon" href="/totem/assets/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div id="loader">
         <div class="spinner-container">
             <img src="/totem/assets/logo_unime.png" alt="Logo Unime" class="spinner-logo">
@@ -55,13 +70,11 @@
 
     <div class="menu-container">
         <nav class="main-menu">
-            <a href="wayfinding.html" class="menu-button">Trova Aula</a>
-            <a href="news.html" class="menu-button">Trova Ufficio</a>
-            <a href="events.html" class="menu-button">Eventi / News</a>
+            <a href="wayfinding.html" class="menu-button" id="wayfinding-link">Trova Aula</a>
+            <a href="infopoint.html" class="menu-button" id="infopoint-link">News & Eventi</a>
         </nav>
     </div>
 
     <script src="/totem/static/js/home.js"></script>
-
 </body>
 </html>

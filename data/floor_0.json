@@ -1,0 +1,15 @@
+{
+    "floor_id": 0, "name": "0 | Piano Terra", "map_image": "/totem/assets/piantina_piano_0.png",
+    "rooms": [
+        {"id": "A-S-1", "name": "Aula A-S-1", "x": 305, "y": 620},
+        {"id": "A-S-2", "name": "Aula A-S-2", "x": 380, "y": 620},
+        {"id": "A-S-3", "name": "Aula A-S-3", "x": 455, "y": 620},
+        {"id": "A-S-6", "name": "Aula A-S-6", "x": 680, "y": 620},
+        {"id": "A-S-7", "name": "Aula A-S-7", "x": 755, "y": 620},
+        {"id": "A-S-8", "name": "Aula A-S-8", "x": 830, "y": 620}
+    ],
+    "pois": [
+        { "id": "stairs_0_main", "name": "Scale Principali", "floor": 0, "x": 540, "y": 500, "links_to": { "floor": 1, "poi_id": "stairs_1_main" } },
+        { "id": "stairs_0_down", "name": "Scale", "floor": 0, "x": 800, "y": 300, "links_to": { "floor": -1, "poi_id": "stairs_-1_down" } }
+    ]
+}
