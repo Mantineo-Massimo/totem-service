@@ -4,8 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1080, initial-scale=1.0">
     <title>Totem Unime - Trova Aula</title>
+
+    <script>
+        (function() {
+            try {
+                // La variabile 'building' viene definita qui correttamente
+                const building = new URLSearchParams(window.location.search).get('building') || 'A';
+                const bgMap = {'A':'totem_A.png','B':'totem_B.png','SBA':'totem_SBA.png'};
+                const buildingKey = building.toUpperCase();
+                if (bgMap[buildingKey]) {
+                    document.documentElement.style.backgroundImage = `url('/totem/assets/${bgMap[buildingKey]}')`;
+                }
+            } catch (e) {
+                console.error("Errore nello script dello sfondo:", e);
+            }
+        })();
+    </script>
+    
     <link rel="stylesheet" href="/totem/static/css/common.css">
     <link rel="stylesheet" href="/totem/static/css/wayfinding.css">
+    
     <link rel="icon" href="/totem/assets/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -16,22 +34,33 @@
             <div class="spinner"></div>
         </div>
     </div>
-    <div class="wayfinding-container">
-        <div class="map-area">
-            <h2 id="floor-name">Seleziona un'aula</h2>
-            <div id="map-wrapper">
-                <img id="map-image" src="" alt="Piantina del piano">
-                <div id="map-overlay"></div>
-                <svg id="path-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    
+    <div class="header-container">
+        <span id="current-date"></span>
+        <span id="current-time"></span>
+    </div>
+
+    <div class="card-selection-container">
+        <h1 id="building-title">Seleziona una destinazione</h1>
+        <div id="floors-container">
             </div>
-            <div id="path-instructions"></div>
-        </div>
-        <div class="rooms-area">
-            <div class="floor-tabs" id="floor-tabs"></div>
-            <div class="rooms-list" id="rooms-list"></div>
+    </div>
+    
+    <div id="modal" class="modal-container">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <div id="results-container">
+                <p id="info-text">Seleziona un'aula per visualizzare il percorso.</p>
+                <div class="map-wrapper">
+                    <img id="floorplan-image" alt="Mappa del piano">
+                    <canvas id="path-canvas"></canvas>
+                </div>
+            </div>
         </div>
     </div>
-    <a href="home.html" class="back-button" id="home-link">← Indietro</a>
+
+    <a href="home.html" class="back-button" id="home-link">Home</a>
+
     <script src="/totem/static/js/wayfinding.js"></script>
 </body>
 </html>

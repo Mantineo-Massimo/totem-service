@@ -1,6 +1,4 @@
 /* Stili specifici SOLO per la home page */
-
-/* Contenitore del menù */
 .menu-container {
     position: absolute;
     top: 680px;
@@ -22,7 +20,6 @@
     align-items: center;
 }
 
-/* Stile dei pulsanti della home page */
 .menu-button {
     background-color: var(--unime-white);
     border: 10px solid var(--unime-gray);

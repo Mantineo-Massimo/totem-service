@@ -9,7 +9,7 @@
         (function() {
             try {
                 const building = new URLSearchParams(window.location.search).get('building') || 'totem_A';
-                const bgMap = {'totem_A':'totem_A.jpg','totem_B':'totem_B.jpg','totem_SBA':'totem_SBA.jpg'};
+                const bgMap = {'totem_A':'totem_A.png','totem_B':'totem_B.png','totem_SBA':'totem_SBA.png'};
                 if (bgMap[building]) {
                     document.documentElement.style.backgroundImage = `url('/totem/assets/${bgMap[building]}')`;
                 }

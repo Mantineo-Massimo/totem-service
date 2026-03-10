@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // MODIFICATO: Ora visualizza l'ora locale di Roma
     function updateDateTime() {
         const serverTime = new Date(new Date().getTime() + state.timeDifference);
-        
+
         // Orologio (ora locale di Roma)
         const clockOptions = {
             timeZone: 'Europe/Rome',
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedDate = serverTime.toLocaleDateString('it-IT', dateOptions);
         dateElement.textContent = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
     }
-    
+
     syncTimeWithServer();
     let secondsCounter = 0;
     setInterval(() => {
@@ -80,32 +80,40 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'none';
         modalBody.innerHTML = '';
     }
-    
-    async function showDetailInModal(url, fallbackTitle) {
+
+    function showDetailInModal(url, fallbackTitle) {
         showModal(fallbackTitle, '<p class="modal-loading">Caricamento in corso...</p>');
-        try {
-            const response = await fetch(`/totem/api/scrape/detail?url=${encodeURIComponent(url)}`);
-            if (!response.ok) throw new Error(`Errore dal server: ${response.statusText}`);
-            const data = await response.json();
-            if (data.title) {
-                modalTitle.textContent = data.title;
-            }
-            modalBody.innerHTML = data.body_html;
-        } catch (error) {
-            console.error('Errore nel caricamento dei dettagli:', error);
-            modalBody.innerHTML = '<p>Impossibile caricare il contenuto. Si prega di riprovare più tardi.</p>';
-        }
+        fetch('/totem/api/scrape/detail?url=' + encodeURIComponent(url))
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Errore dal server: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.title) {
+                    modalTitle.textContent = data.title;
+                }
+                modalBody.innerHTML = data.body_html;
+            })
+            .catch(function (error) {
+                console.error('Errore nel caricamento dei dettagli:', error);
+                modalBody.innerHTML = '<p>Impossibile caricare il contenuto. Si prega di riprovare più tardi.</p>';
+            });
     }
 
-    async function fetchData(url) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Errore HTTP: ${response.status}`);
-            return await response.json();
-        } catch (error) {
-            console.error(`Impossibile caricare i dati da ${url}:`, error);
-            return [];
-        }
+    function fetchData(url) {
+        return fetch(url)
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Errore HTTP: ' + response.status);
+                }
+                return response.json();
+            })
+            .catch(function (error) {
+                console.error('Impossibile caricare i dati da ' + url + ':', error);
+                return [];
+            });
     }
 
     function parseItalianDate(dateString) {
@@ -122,10 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return null;
     }
-    
+
     // Listener (invariati)
     if (homeLink && loader) {
-        homeLink.addEventListener('click', function(e) {
+        homeLink.addEventListener('click', function (e) {
             e.preventDefault();
             loader.classList.remove('hidden');
             setTimeout(() => { window.location.href = this.href; }, 150);
@@ -135,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.addEventListener('click', (event) => {
         if (event.target === modal) hideModal();
     });
-    
+
     // Caricamento dati (invariato)
     Promise.all([
         fetchData('/totem/api/scrape/events'),
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             futureEvents.forEach(event => {
                 const slide = document.createElement('div');
                 slide.className = 'swiper-slide';
-                slide.innerHTML = `<p class="event-date">${event.date||''}</p><h3 class="event-title">${event.title}</h3>`;
+                slide.innerHTML = `<p class="event-date">${event.date || ''}</p><h3 class="event-title">${event.title}</h3>`;
                 slide.addEventListener('click', () => showDetailInModal(event.link, event.title));
                 eventsWrapper.appendChild(slide);
             });

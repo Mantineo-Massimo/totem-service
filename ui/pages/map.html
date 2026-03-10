@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, initial-scale=1.0">
+    <title>Totem Unime - Mappa</title>
+    <link rel="stylesheet" href="/totem/static/css/common.css">
+    <link rel="stylesheet" href="/totem/static/css/map.css">
+    <link rel="icon" href="/totem/assets/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="floor-selector">
+        </div>
+
+    <div id="map-image-container">
+        <img id="map-image" src="" alt="Mappa del piano">
+
+        <div id="map-controls">
+            <div class="control-group zoom-controls">
+                <button id="zoom-in-btn" class="control-button">+</button>
+                <button id="zoom-out-btn" class="control-button">−</button>
+            </div>
+            <div class="control-group pan-controls">
+                <button id="pan-up-btn" class="control-button arrow">▲</button>
+                <div class="pan-horizontal">
+                    <button id="pan-left-btn" class="control-button arrow">◄</button>
+                    <button id="reset-btn" class="control-button">●</button>
+                    <button id="pan-right-btn" class="control-button arrow">►</button>
+                </div>
+                <button id="pan-down-btn" class="control-button arrow">▼</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="legend-panel">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #0a2b5e;"></div>
+            <span class="legend-text">Punto di Partenza (Tu sei qui)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: red;"></div>
+            <span class="legend-text">Punto di Arrivo</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="border: 4px dashed #2f69aa;"></div>
+            <span class="legend-text">Percorso Suggerito</span>
+        </div>
+    </div>
+    <div id="legend-handle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z"/></svg>
+        <span>Mostra Legenda</span>
+    </div>
+
+    <a href="home.html" class="back-button" id="home-link">Home</a>
+    <script src="/totem/static/js/map.js"></script>
+</body>
+</html>
