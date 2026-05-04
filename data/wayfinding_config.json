@@ -1,0 +1,36 @@
+{
+    "A": {
+        "name": "Edificio A",
+        "floors": {
+            "1": {
+                "name": "Piano 1",
+                "map_url": "/totem/assets/maps/edificio-a-piano-1.svg",
+                "dimensions": {"width": 1500, "height": 1000},
+                "rooms": [
+                    {
+                        "id": "A-1-1", 
+                        "name": "Aula A-1-1", 
+                        "paths": {
+                            "totem_A_ingresso": [[750, 950], [1400, 500], [300, 300]],
+                            "totem_A_secondario": [[100, 950], [400, 500], [300, 300]]
+                        }
+                    }
+                ]
+            },
+            "0": {
+                "name": "Piano Terra",
+                "map_url": "/totem/assets/maps/edificio-a-piano-0.svg",
+                "dimensions": {"width": 1500, "height": 1000},
+                "rooms": [
+                    {
+                        "id": "A-S-1", 
+                        "name": "Aula A-S-1", 
+                        "paths": {
+                            "totem_A_ingresso": [[750, 950], [300, 300]]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
