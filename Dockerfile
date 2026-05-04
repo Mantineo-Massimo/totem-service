@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 8080
 
 # Comando per avviare l'applicazione con Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--access-logfile", "-", "run:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--access-logfile", "-", "run:application"]
