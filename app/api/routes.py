@@ -131,6 +131,10 @@ def find_path():
     return jsonify(response_data)
 
 # --- Frontend Routes ---
+@bp.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(os.path.join(current_app.root_path, '..', 'ui', 'static'), filename)
+
 @bp.route('/assets/<path:filename>')
 def serve_assets(filename):
     return send_from_directory(os.path.join(current_app.root_path, '..', 'ui', 'assets'), filename)
